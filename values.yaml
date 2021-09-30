@@ -17,3 +17,71 @@ toolr:
         value: "qa"
 
 scheme: HTTP
+
+# Add application settings here. They will be added as a Configmap object and mounted in your Deployment.
+# Replace '{}' with settings to apply app settings.
+# eg. 
+# appSettings: 
+#   food: apple
+#   drink: milk
+appSettings: {}
+
+webapi:
+  enabled: true
+  image:
+    repository: httpd
+    tag: latest
+    imagePullPolicy: IfNotPresent
+  replicas: 2
+  rollingUpdate:
+    enabled: true
+    maxSurge: 2
+    maxUnavailable: 0
+  containerPort: 80
+  podLabels: {}
+  command: []
+  args: []
+
+  # https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes
+  livenessProbe:
+    tcpProbe: false
+    initialDelaySeconds: 30
+    periodSeconds: 10
+    path: /ping
+    timeoutSeconds: 1
+    scheme: HTTP
+    tcpPort: 8080
+  readinessProbe:
+    tcpProbe: false
+    initialDelaySeconds: 30
+    periodSeconds: 10
+    path: /ping
+    timeoutSeconds: 1
+    scheme: HTTP
+    tcpPort: 8080
+# Enable to include secrets for app
+secrets:
+  enabled: false
+  mountPath: /var/run/secrets/app
+  # Replace '{}' with secrets to mount in your app
+  # eg. 
+  # secretValues:
+  #   Database__Password: SOMESECUREPASSWORD
+  secretValues: {}
+  
+  # Additional Secret mounts
+  # Defines additional mounts with secrets. Secrets must be manually created in the namespace.
+  # This allows you to mount shared secrets as long as the secret exists in your namespace
+  extraSecretMounts: []
+  # - name: shared-secret-mount
+  #   mountPath: /etc/secrets
+  #   subPath: ""
+  #   secretName: shared-secret
+  #   readOnly: true
+
+
+service:
+  enabled: true
+  type: ClusterIP
+  port: 80
+  labels: {}
