@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.toolr.name}}-deployment
+  labels:
+    name: {{ .Values.toolr.name}}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Values.toolr.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.toolr.name }}
+    spec:
+      containers:
+      - name: {{ .Values.toolr.name }}
+        image: {{ .Values.toolr.container.image }}
+        ports:
+        - name: https
+          containerPort: 8000
+        envFrom:
+        - configMapRef:
+            name: {{ .Values.toolr.name }}-config
+        readinessProbe:
+          httpGet:
+            path: /
+            port: https
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        livenessProbe:
+          httpGet:
+            path: /
+            port: https
+            schema: {{ .Values.schema}}
+          initialDelaySeconds: 15
+          periodSeconds: 20
+      imagePullSecrets:
+        - name: regcred # this secret need to be on k8s master
+      restartPolicy: Always
+      tolerations:
+        - key: "node.kubernetes.io/unreachable"
+          operator: "Exists"
+          effect: "NoExecute"
+          tolerationSeconds: 0
+        - key: "node.kubernetes.io/not-ready"
+          operator: "Exists"
+          effect: "NoExecute"
+          tolerationSeconds: 0

@@ -1,0 +1,19 @@
+replicaCount: 1
+
+toolr:
+  name: toolr
+  container:
+    image: jasonsun9406/toolr:master_48
+  service:
+    type: NodePort
+    port: 8080
+    targetPort: 8000
+    nodePort: 30001
+  config:
+    data:
+      - key: PORT
+        value: "8000"
+      - key: FLASK_ENV
+        value: "qa"
+
+scheme: HTTP
