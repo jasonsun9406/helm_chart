@@ -3,7 +3,7 @@ replicaCount: 1
 toolr:
   name: toolr
   container:
-    image: jasonsun9406/toolr:master_48
+    image: jasonsun9406/toolr:master_49
   service:
     type: NodePort
     port: 8080
