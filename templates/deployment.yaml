@@ -5,7 +5,7 @@ metadata:
   labels:
     name: {{ .Values.webapi.name}}
 spec:
-  replicas: {{ .Values.replicaCount }}
+  replicas: {{ .Values.webapi.container.replicas }}
   selector:
     matchLabels:
       app: {{ .Values.webapi.name }}
@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: {{ .Values.webapi.name }}
-        image: "{{ .Values.webapi.repository }}:{{ .Values.webapi.tag }}"
+        image: "{{ .Values.webapi.container.image.repository }}:{{ .Values.webapi.container.image.tag }}"
         ports:
         - name: https
           containerPort: {{ .Values.webapi.containerPort }}
