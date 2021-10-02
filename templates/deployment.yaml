@@ -1,41 +1,42 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Values.toolr.name}}-deployment
+  name: {{ .Values.webapi.name}}
   labels:
-    name: {{ .Values.toolr.name}}
+    name: {{ .Values.webapi.name}}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: {{ .Values.toolr.name }}
+      app: {{ .Values.webapi.name }}
   template:
     metadata:
       labels:
-        app: {{ .Values.toolr.name }}
+        app: {{ .Values.webapi.name }}
     spec:
       containers:
-      - name: {{ .Values.toolr.name }}
-        image: {{ .Values.toolr.container.image }}
+      - name: {{ .Values.webapi.name }}
+        image: "{{ .Values.webapi.repository }}:{{ .Values.webapi.tag }}"
         ports:
         - name: https
-          containerPort: 8000
+          containerPort: {{ .Values.webapi.containerPort }}
         envFrom:
         - configMapRef:
-            name: {{ .Values.toolr.name }}-config
+            name: {{ .Values.webapi.name }}
         readinessProbe:
           httpGet:
-            path: /
+            path: {{ .Values.webapi.readinessProbe.path}}
             port: https
-          initialDelaySeconds: 5
-          periodSeconds: 10
+            scheme: {{ .Values.webapi.readinessProbe.scheme}}
+          initialDelaySeconds: {{ .Values.webapi.readinessProbe.initialDelaySeconds}}
+          periodSeconds: {{ .Values.webapi.readinessProbe.periodSeconds}}
         livenessProbe:
           httpGet:
-            path: /
+            path: {{ .Values.webapi.livenessProbe.path}}
             port: https
-            schema: {{ .Values.schema}}
-          initialDelaySeconds: 15
-          periodSeconds: 20
+            scheme: {{ .Values.webapi.livenessProbe.scheme}}
+          initialDelaySeconds: {{ .Values.webapi.livenessProbe.initialDelaySeconds}}
+          periodSeconds: {{ .Values.webapi.livenessProbe.periodSeconds}}
       imagePullSecrets:
         - name: regcred # this secret need to be on k8s master
       restartPolicy: Always

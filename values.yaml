@@ -27,7 +27,7 @@ scheme: HTTP
 appSettings: {}
 
 webapi:
-  enabled: true
+  name: webapi-qa # follow naming standard of ${webapi_name}-${env}
   image:
     repository: httpd
     tag: latest
@@ -45,20 +45,21 @@ webapi:
   # https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes
   livenessProbe:
     tcpProbe: false
-    initialDelaySeconds: 30
-    periodSeconds: 10
-    path: /ping
+    initialDelaySeconds: 15
+    periodSeconds: 20
+    path: /
     timeoutSeconds: 1
     scheme: HTTP
     tcpPort: 8080
   readinessProbe:
     tcpProbe: false
-    initialDelaySeconds: 30
+    initialDelaySeconds: 5
     periodSeconds: 10
-    path: /ping
+    path: /
     timeoutSeconds: 1
     scheme: HTTP
     tcpPort: 8080
+
 # Enable to include secrets for app
 secrets:
   enabled: false
@@ -81,7 +82,7 @@ secrets:
 
 
 service:
-  enabled: true
-  type: ClusterIP
-  port: 80
-  labels: {}
+  type: NodePort
+  port: 8080
+  targetPort: 8080
+  nodePort: 30001
