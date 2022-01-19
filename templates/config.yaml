@@ -1,8 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: {{ .Values.webapi.name }}
-data:
-  {{- range $key, $val := .Values.appSettings }}
-  {{ $key }}: {{ $val | quote }}
-  {{- end }}

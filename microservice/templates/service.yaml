@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{.Values.webapi.name}}
+  labels:
+    service: {{.Values.webapi.name}}
+spec:
+  type: {{.Values.service.type}}
+  selector:
+    app: {{ .Values.webapi.name }}
+  ports:
+  - port: {{.Values.service.port}} # this is port on service exposed internally
+    targetPort: {{.Values.service.targetPort}} # this is port on pod
+    nodePort: {{.Values.service.nodePort}} # this is port on service exposed externally
