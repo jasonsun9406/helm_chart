@@ -10,5 +10,3 @@ spec:
     app: {{ .Values.webapi.name }}
   ports:
   - port: {{.Values.service.port}} # this is port on service exposed internally
-    targetPort: {{.Values.service.targetPort}} # this is port on pod
-    nodePort: {{.Values.service.nodePort}} # this is port on service exposed externally

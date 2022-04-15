@@ -1,0 +1,30 @@
+appSettings:
+ DB_HOST: fake
+ DB_PORT: fake
+ DB_NAME: fake
+
+webapi:
+ name: toolr-prod
+ container:
+  image:
+   repository: test/ttt
+   tag: testtest
+  replicas: 3
+ containerPort: 8000
+
+service:
+# type: NodePort
+ port: 8000
+# targetPort: 8000
+# nodePort: 30201
+
+secrets:
+ enabled: true
+ secretValues:
+  DB_USER: AgCKHbXTeZ8poUmasxqzrcpjVEIJes9dFrkrWc90kfjLCPiDoHn3utp5ERE+3Ay8kr9Yq6W1YelWZyfPzGMqYb6UaQ4Bm70F8n616j6tn8R2NU1QuAG22vLQI3dAPWLVpGvfS36V9DC16W201F7Ee8yVy8W9KEJSA5kRiAYeexyC/3u3p1Sucsx9c8xb5Qjjs/zRfcKi1QlA+oCFxIRB1KzCzE+dFqY7AcDvNmdKUS6a/Bt+zbf1iNDtyQ0+gTdw51YLbG34PZhLeW8hW4TKai0gc9/+y3xaiXUMFBPem1D+aSjPmD3d6tKK283qVnazcJeBwyo6WqbYlI8cWN5y8kuNS2CIgdqyddiLIMmLO8SHg/TWPXGa2nxSASkmk+FHX+Olk5hncaEv0aaYGhfNEX6hkJNlUE3+T/oe3E2TyQPBVbuYTngaXkLLou/TuImoVhEXbDVKDDviO0JqP28FeyJhMV11CKTuioUh2oXKebdeJCX+fA00211rQnwmI39Fv7i0MoTpcPraH6Xnz8tdi5UMoc7XCyk48AlVESM38XX4rSdznTJUhoZvau9VNcZk9cDuptcWxAYYPCKFaMgFch1TdOw0rM50gll4E0i2ZNXS9B6ptps182KcjnhN7k+cvK12puNphzzfEwZHTMq5VmSOLyoEzt6ZDBPfokoF0B7kgCD3ozajufo44Skd1we1+F3WlKg7
+  DB_PASSWORD: AgApEy7+vzPHxsY/ikbYjCqvBQM9lTLpD2T4KqXSV5AcGX6o/QomjVRQ33iMRLAJL3oX3FLpQwFXmu8999l7WH+oEIJeo5KVYu+tpGasXURAoJHgTJ+Xy/bRPZhaT2kM1OnuKX20yUDfXRe1RZMemsTB38ZUntJX5fUKLHPuLEPFRNXSc9hBRG8Xfy1h3jK1BzhGTFocEBDvPsu5097WMoDOilqPTjTc2jj4vInqiaUtizMVRksQ9ASqhfRXGRBXMBtEXx4YpONU7dWQJ+b6Y9JnOS10+gnBacvamAsYSGw1ePnZE9bMXZen6rddu7P1U6Je1MqJXSgPzYLdPzjfso6xrHBWUAVbJqi4Z8S31CO5PLsAHkrdbn9ubsdNs4+KIPttemchJwPpMR0SjoLPI8s1LPpDiGr5bnRHDl0v9RdNbiL63XXwrflz+HMzb5SjQv2tWolIxXno+N67hwKRh7/nReXRYrfZMbavlEuqTPWMOHbOvlfeAWTym8rktam+JcEj/DiX0hpKzdyIDYXQtbfHNzy54il1L75HTvsbiFthOjd6qtat+LqVjzOFtPMkEsGq+KLgUPQ0rWckyC2lgX6TX9PBuB4MQMTDP0n8UsygegMa3mApKBSbRswPL5sqj8XJPAv5LgvY2rbsmLKEqZJHCAbXOfF9zWutg9zr53vN29RlNuIqwB/+BueuPjyMuHSSfGMJHcXshg==
+
+namespace: toolr
+
+ingress:
+  enabled: true
