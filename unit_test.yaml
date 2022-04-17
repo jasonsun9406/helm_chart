@@ -28,3 +28,4 @@ namespace: toolr
 
 ingress:
   enabled: true
+  host: testing.haha.com

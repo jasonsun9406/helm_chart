@@ -91,3 +91,4 @@ service:
 
 ingress:
   enabled: false
+  host: fake.blahblah.com

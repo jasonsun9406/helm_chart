@@ -6,7 +6,6 @@ metadata:
   annotations:
     nginx.ingress.kubernetes.io/ssl-redirect: "false"
     nginx.ingress.kubernetes.io/use-regex: "true"
-    nginx.ingress.kubernetes.io/rewrite-target: /$2
 spec:
   ingressClassName: nginx
   rules:
@@ -19,4 +18,5 @@ spec:
             name: {{.Values.webapi.name}}
             port:
               number: {{.Values.service.port}}
+    host: {{.Values.ingress.host}}
 {{- end -}}
