@@ -1,0 +1,43 @@
+{{- if .Values.webjob.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.webjob.name}}
+  labels:
+    name: {{ .Values.webjob.name}}
+spec:
+  replicas: {{ .Values.webjob.container.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Values.webjob.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.webjob.name }}
+    spec:
+      containers:
+      - name: {{ .Values.webjob.name }}
+        image: "{{ .Values.webjob.container.image.repository }}:{{ .Values.webjob.container.image.tag }}"
+        ports:
+        - name: https
+          containerPort: {{ .Values.webjob.containerPort }}
+        envFrom:
+        - configMapRef:
+            name: {{ .Values.webjob.name }}
+        {{- if .Values.secrets.enabled }}
+        - secretRef:
+            name: {{ .Values.webjob.name }}
+        {{- end}}
+      imagePullSecrets:
+        - name: regcred # this secret need to be on k8s master
+      restartPolicy: Always
+      tolerations:
+        - key: "node.kubernetes.io/unreachable"
+          operator: "Exists"
+          effect: "NoExecute"
+          tolerationSeconds: 0
+        - key: "node.kubernetes.io/not-ready"
+          operator: "Exists"
+          effect: "NoExecute"
+          tolerationSeconds: 0
+{{- end}}

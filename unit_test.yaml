@@ -12,6 +12,16 @@ webapi:
   replicas: 3
  containerPort: 8000
 
+webjob:
+ enabled: true
+ name: toolr-prod
+ container:
+  image:
+   repository: test/ttt
+   tag: testtest
+  replicas: 3
+ containerPort: 8000
+
 service:
 # type: NodePort
  port: 8000

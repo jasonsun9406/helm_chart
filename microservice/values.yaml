@@ -29,6 +29,7 @@ scheme: HTTP
 appSettings: {}
 
 webapi:
+  enabled: true
   name: webapi-qa # follow naming standard of ${webapi_name}-${env}
   image:
     repository: httpd
@@ -61,6 +62,24 @@ webapi:
     timeoutSeconds: 1
     scheme: HTTP
     tcpPort: 8080
+
+webjob:
+  enabled: false
+  name: webapi-qa # follow naming standard of ${webapi_name}-${env}
+  image:
+    repository: httpd
+    tag: latest
+    imagePullPolicy: IfNotPresent
+  replicas: 2
+  rollingUpdate:
+    enabled: true
+    maxSurge: 2
+    maxUnavailable: 0
+  containerPort: 80
+  podLabels: {}
+  command: []
+  args: []
+
 
 # Enable to include secrets for app
 secrets:
