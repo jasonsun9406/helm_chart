@@ -6,7 +6,7 @@ metadata:
   labels:
     name: {{ .Values.webjob.name}}
 spec:
-  replicas: {{ .Values.webjob.container.replicas }}
+  replicas: {{ .Values.webjob.replicas }}
   selector:
     matchLabels:
       app: {{ .Values.webjob.name }}
@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: {{ .Values.webjob.name }}
-        image: "{{ .Values.webjob.container.image.repository }}:{{ .Values.webjob.container.image.tag }}"
+        image: "{{ .Values.webjob.image.repository }}:{{ .Values.webjob.image.tag }}"
         ports:
         - name: https
           containerPort: {{ .Values.webjob.containerPort }}
