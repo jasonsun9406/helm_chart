@@ -1,0 +1,38 @@
+{{- if .Values.canary.enabled -}}
+apiVersion: flagger.app/v1beta1
+kind: Canary
+metadata:
+  name: {{.Values.webapi.name}}
+spec:
+  provider: kubernetes
+  targetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: {{.Values.webapi.name}}
+  progressDeadlineSeconds: {{.Values.canary.progressDeadlineSeconds}}
+  service:
+    port: {{.Values.canary.service.port}}
+    portDiscovery: {{.Values.canary.service.portDiscovery}}
+  skipAnalysis: {{.Values.canary.skipAnalysis}}
+  analysis:
+    interval: {{.Values.canary.analysis.interval}}
+    threshold: {{.Values.canary.analysis.threshold}}
+    iterations: {{.Values.canary.analysis.iterations}}
+    metrics:
+    - name: request-success-rate
+      thresholdRange:
+        min: {{.Values.canary.analysis.metrics.RequestSuccessRate.thresholdRange.min}}
+      interval: {{.Values.canary.analysis.metrics.RequestSuccessRate.interval}}
+    - name: request-duration
+      thresholdRange:
+        max: {{.Values.canary.analysis.metrics.RequestDuration.thresholdRange.max}}
+      interval: {{.Values.canary.analysis.metrics.RequestDuration.interval}}
+    {{- if .Values.canary.analysis.webhooks }} # webhooks is optional
+    webhooks:
+    {{- range $webhookName, $webhookValues := .Values.canary.analysis.webhooks }}
+    - name: {{ $webhookName}}
+{{ toYaml $webhookValues | trim | indent 6}}
+    {{- end -}}
+    {{- end -}}
+{{- end -}}
+

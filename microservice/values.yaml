@@ -87,6 +87,7 @@ secrets:
 
 
 service:
+  enabled: true
   type: ClusterIP
   port: 80
   targetPort: 80
@@ -95,3 +96,26 @@ service:
 ingress:
   enabled: false
   host: fake.blahblah.com
+
+canary:
+  enabled: false
+  progressDeadlineSeconds: 600
+  service:
+    port: 8000
+    portDiscovery: true
+  skipAnalysis: False
+  analysis:
+    interval: 10s
+    threshold: 2
+    iterations: 2
+    metrics:
+    # minimum req success rate (non 5xx responses)
+      RequestSuccessRate:
+        thresholdRange:
+          min: 99
+        interval: 10
+      RequestDuration:
+        thresholdRange:
+          max: 55
+        interval: 30
+    webhooks: {}

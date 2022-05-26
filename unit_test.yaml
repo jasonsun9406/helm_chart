@@ -29,3 +29,18 @@ namespace: toolr
 ingress:
   enabled: true
   host: testing.haha.com
+
+canary:
+ enabled: true
+ analysis:
+  webhooks:
+   integration-test:
+    type: pre-rollout
+    url: http://flagger-dogs-int-tests.sandbox:9000/hooks/run-tests
+    timeout: 1m
+   load-test:
+    url: http://flagger-loadtester.flaggerlt/
+    timeout: 5s
+    metadata:
+     type: cmd
+     cmd: hey -z 1m -q 10 -c 2 http://flagger-dogs-int-canary.sandbox:8001/ping
