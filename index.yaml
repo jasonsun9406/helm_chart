@@ -8,7 +8,7 @@ entries:
     digest: 94de373d011218c84be8d9dc636142d2a5abb193f0e8c1f35ad8385b9fad222c
     name: microservice
     urls:
-    - https://github.com/jasonsun9406/helm_chart/releases/download/microservice-2.1.0/microservice-2.1.0.tgz
+    - https://jasonsun9406.github.io/helm_chart/microservice-2.1.0.tgz
     version: 2.1.0
   - apiVersion: v1
     appVersion: 2.0.4
